@@ -4,6 +4,10 @@
     <groupId>com.grignard</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <name>bank kata</name>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     <dependencies>
 		<dependency>
             <groupId>org.projectlombok</groupId>
