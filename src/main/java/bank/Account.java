@@ -25,12 +25,12 @@ public class Account {
         return login;
     }
 
-    public void deposit(BigDecimal amount) {
+    public synchronized void deposit(BigDecimal amount) {
         balance = balance.add(amount);
         operations.add(new Operation(Operation.OperationType.DEPOSIT, amount, balance));
     }
 
-    public void withdrawal(BigDecimal amount) {
+    public synchronized void withdrawal(BigDecimal amount) {
         if( balance.compareTo(amount) >= 0){
             balance = balance.subtract(amount);
             operations.add(new Operation(Operation.OperationType.WITHDRAWAL, amount, balance));
