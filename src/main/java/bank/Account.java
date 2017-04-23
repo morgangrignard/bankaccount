@@ -25,7 +25,12 @@ public class Account {
     }
 
     public void withdrawal(double amount) {
-        balance -= amount;
+        if( balance >= amount){
+            balance -= amount;
+        }
+        else{
+            throw new IllegalArgumentException("Amount greater than current balance");
+        }
     }
 
     public double getBalance() {
