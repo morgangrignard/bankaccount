@@ -2,6 +2,7 @@ package bank;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Account {
@@ -45,6 +46,8 @@ public class Account {
     }
 
     public List<Operation> getHistory() {
-        return operations;
+        List<Operation> shallowCopy = operations.subList(0, operations.size());
+        Collections.reverse(shallowCopy);
+        return shallowCopy;
     }
 }

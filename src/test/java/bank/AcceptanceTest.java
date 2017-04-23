@@ -82,9 +82,9 @@ public class AcceptanceTest {
 
         List<Operation> history = account.getHistory();
         assertThat(history).hasSize(3);
-        verify( history.get(0), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT_X2, AMOUNT_X2);
+        verify( history.get(2), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT_X2, AMOUNT_X2);
         verify( history.get(1), Operation.OperationType.WITHDRAWAL, beforeAction, afterAction, AMOUNT, AMOUNT);
-        verify( history.get(2), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT, AMOUNT_X2);
+        verify( history.get(0), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT, AMOUNT_X2);
     }
 
     private void verify(Operation operation, Operation.OperationType type, LocalDateTime beforeAction, LocalDateTime afterAction, BigDecimal amount, BigDecimal balance){
