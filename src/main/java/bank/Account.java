@@ -46,7 +46,10 @@ public class Account {
     }
 
     public List<Operation> getHistory() {
-        List<Operation> shallowCopy = operations.subList(0, operations.size());
+        List<Operation> shallowCopy;
+        synchronized (this){
+            shallowCopy = operations.subList(0, operations.size());
+        }
         Collections.reverse(shallowCopy);
         return shallowCopy;
     }
