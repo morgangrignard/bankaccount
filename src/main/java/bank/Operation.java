@@ -1,5 +1,6 @@
 package bank;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -10,21 +11,21 @@ public class Operation {
 
     private OperationType type;
     private LocalDateTime date;
-    private double amount;
-    private double balance;
+    private BigDecimal amount;
+    private BigDecimal balance;
 
-    public Operation( OperationType type, double amount, double balance){
+    public Operation( OperationType type, BigDecimal amount, BigDecimal balance){
         this.type = type;
         this.amount = amount;
         this.balance = balance;
         this.date = LocalDateTime.now();
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 

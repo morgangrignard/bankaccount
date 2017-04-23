@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AcceptanceTest {
 
-    public static final int AMOUNT = 1000;
+    public static final BigDecimal AMOUNT = BigDecimal.valueOf(1000);
+    public static final BigDecimal AMOUNT_X2 = AMOUNT.multiply(BigDecimal.valueOf(2));
     public static final String LOGIN = "Login";
     public static final String PASSWORD = "Password";
 
@@ -34,7 +35,7 @@ public class AcceptanceTest {
     public void asABankClientMakeADeposit() throws IllegalAccessException {
         Account account = bank.getAccount(LOGIN, PASSWORD);
         account.deposit(AMOUNT);
-        assertThat(account.getBalance()).isEqualTo(1000);
+        assertThat(account.getBalance()).isEqualTo(AMOUNT);
     }
 
     /**
@@ -47,7 +48,7 @@ public class AcceptanceTest {
         Account account = bank.getAccount(LOGIN, PASSWORD);
         account.deposit(AMOUNT);
         account.withdrawal(AMOUNT);
-        assertThat(account.getBalance()).isEqualTo(0);
+        assertThat(account.getBalance()).isEqualTo(BigDecimal.ZERO);
     }
 
     /**
@@ -59,7 +60,7 @@ public class AcceptanceTest {
     public void asABankClientBeRefuseToMakeAWithdrawalGreaterThanBalance() throws IllegalAccessException {
         Account account = bank.getAccount(LOGIN, PASSWORD);
         account.deposit(AMOUNT);
-        account.withdrawal(AMOUNT*2);
+        account.withdrawal(AMOUNT_X2);
     }
 
     /**
@@ -73,7 +74,7 @@ public class AcceptanceTest {
 
         LocalDateTime beforeAction = LocalDateTime.now();
 
-        account.deposit(AMOUNT*2);
+        account.deposit(AMOUNT_X2);
         account.withdrawal(AMOUNT);
         account.deposit(AMOUNT);
 
@@ -81,12 +82,12 @@ public class AcceptanceTest {
 
         List<Operation> history = account.getHistory();
         assertThat(history).hasSize(3);
-        verify( history.get(0), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT*2, AMOUNT*2);
+        verify( history.get(0), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT_X2, AMOUNT_X2);
         verify( history.get(1), Operation.OperationType.WITHDRAWAL, beforeAction, afterAction, AMOUNT, AMOUNT);
-        verify( history.get(2), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT, AMOUNT*2);
+        verify( history.get(2), Operation.OperationType.DEPOSIT, beforeAction, afterAction, AMOUNT, AMOUNT_X2);
     }
 
-    private void verify(Operation operation, Operation.OperationType type, LocalDateTime beforeAction, LocalDateTime afterAction, double amount, double balance){
+    private void verify(Operation operation, Operation.OperationType type, LocalDateTime beforeAction, LocalDateTime afterAction, BigDecimal amount, BigDecimal balance){
         assertThat(operation.getType()).isEqualTo(type);
         assertThat(operation.getDate()).isAfterOrEqualTo(beforeAction);
         assertThat(operation.getDate()).isBeforeOrEqualTo(afterAction);

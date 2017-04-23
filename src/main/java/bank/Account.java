@@ -1,5 +1,6 @@
 package bank;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Account {
     private String password;
 
     private List<Operation> operations = new ArrayList<Operation>();
-    private double balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     public Account(String login, String password) {
         this.login = login;
@@ -24,14 +25,14 @@ public class Account {
         return login;
     }
 
-    public void deposit(double amount) {
-        balance += amount;
+    public void deposit(BigDecimal amount) {
+        balance = balance.add(amount);
         operations.add(new Operation(Operation.OperationType.DEPOSIT, amount, balance));
     }
 
-    public void withdrawal(double amount) {
-        if( balance >= amount){
-            balance -= amount;
+    public void withdrawal(BigDecimal amount) {
+        if( balance.compareTo(amount) >= 0){
+            balance = balance.subtract(amount);
             operations.add(new Operation(Operation.OperationType.WITHDRAWAL, amount, balance));
         }
         else{
@@ -39,7 +40,7 @@ public class Account {
         }
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
