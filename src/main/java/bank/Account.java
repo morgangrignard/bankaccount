@@ -12,19 +12,23 @@ public class Account {
         this.password = password;
     }
 
-    public void deposit(double amount) {
-        balance += amount;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public String getLogin() {
         return login;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public void withdrawal(double amount) {
+        balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 }

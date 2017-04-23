@@ -31,4 +31,19 @@ public class AcceptanceTest {
         account.deposit(AMOUNT);
         assertThat(account.getBalance()).isEqualTo(1000);
     }
+
+    /**
+     * In order to retrieve some or all of my savings
+     As a bank client
+     I want to make a withdrawal from my account
+     */
+    @Test
+    public void asABankClientMakeAWithdrawal() throws IllegalAccessException {
+        Account account = bank.getAccount(LOGIN, PASSWORD);
+        account.deposit(AMOUNT);
+        account.withdrawal(AMOUNT);
+        assertThat(account.getBalance()).isEqualTo(0);
+    }
+
+
 }
